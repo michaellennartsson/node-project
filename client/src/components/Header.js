@@ -18,7 +18,7 @@ class Header extends Component {
       default:
         return (
           <li className="navbar-item-right">
-            <a className="navbar-link margin-left" href="/api/signout">
+            <a className="navbar-link margin-left" href="/api/logout">
               Sign Out
             </a>
           </li>
