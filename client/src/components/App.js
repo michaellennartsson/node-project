@@ -4,9 +4,9 @@ import { connect } from 'react-redux';
 import * as actions from '../actions';
 
 import Header from './Header';
+import About from './About';
 const Home = () => <h2>Home</h2>;
 const Projects = () => <h2>Projects</h2>;
-const About = () => <h2>About</h2>;
 
 class App extends Component {
   componentDidMount() {

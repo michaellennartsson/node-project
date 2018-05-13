@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 class Header extends Component {
   renderContent() {
@@ -32,19 +33,19 @@ class Header extends Component {
         <div className="container">
           <ul className="navbar-list">
             <li className="navbar-item-left">
-              <a className="navbar-link margin-right" href="Home">
+              <Link to="/" className="navbar-link margin-right">
                 Home
-              </a>
+              </Link>
             </li>
             <li className="navbar-item-left">
-              <a className="navbar-link margin-right" href="Projects">
+              <Link to="/projects" className="navbar-link margin-right">
                 Projects
-              </a>
+              </Link>
             </li>
             <li className="navbar-item-left">
-              <a className="navbar-link margin-right" href="About">
+              <Link to="/about" className="navbar-link margin-right">
                 About
-              </a>
+              </Link>
             </li>
             {this.renderContent()}
           </ul>
