@@ -3,10 +3,11 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 
-import Header from './Header';
 import About from './About';
-const Home = () => <h2>Home</h2>;
-const Projects = () => <h2>Projects</h2>;
+import CurrencyConverter from './CurrencyConverter';
+import Home from './Home';
+import Header from './Header';
+import Snake from './Snake';
 
 class App extends Component {
   componentDidMount() {
@@ -20,8 +21,9 @@ class App extends Component {
           <div className="container">
             <Header />
             <Route exact={true} path="/" component={Home} />
-            <Route path="/projects" component={Projects} />
             <Route path="/about" component={About} />
+            <Route path="/currency-converter" component={CurrencyConverter} />
+            <Route path="/snake" component={Snake} />
           </div>
         </BrowserRouter>
       </div>

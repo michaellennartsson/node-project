@@ -3,8 +3,62 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 class Header extends Component {
-  renderContent() {
-    console.log(this.props.auth);
+  componentDidMount() {
+    this.closePopOver();
+  }
+
+  closePopOver() {
+    console.log('Did Mount');
+    const pop = this.refs.popOver;
+    pop.classList.remove('open');
+  }
+
+  togglePopOver() {
+    const pop = this.refs.popOver;
+    pop.classList.toggle('open');
+  }
+
+  renderDropDown() {
+    return (
+      <li className="navbar-item-left">
+        <Link
+          to="#"
+          className="navbar-link margin-right"
+          data-popover="#codeNavPopover"
+          onClick={this.togglePopOver.bind(this)}
+        >
+          Projects
+        </Link>
+        <div
+          ref="popOver"
+          id="codeNavPopover"
+          className="popover open"
+          onClick={this.togglePopOver.bind(this)}
+        >
+          <ul className="popover-list">
+            <li className="popover-item">
+              <Link to="/currency-converter" className="popover-link">
+                Currency Converter
+              </Link>
+            </li>
+            <li className="popover-item">
+              <Link to="/snake" className="popover-link">
+                Snake
+              </Link>
+            </li>
+            <li className="popover-item">
+              <Link to="" className="popover-link" href="#typography">
+                Tabs
+              </Link>
+            </li>
+          </ul>
+        </div>
+      </li>
+    );
+  }
+
+  renderSignIn() {
+    //console.log(this.props.auth);
     switch (this.props.auth) {
       case null:
         return;
@@ -37,17 +91,13 @@ class Header extends Component {
                 Home
               </Link>
             </li>
-            <li className="navbar-item-left">
-              <Link to="/projects" className="navbar-link margin-right">
-                Projects
-              </Link>
-            </li>
+            {this.renderDropDown()}
             <li className="navbar-item-left">
               <Link to="/about" className="navbar-link margin-right">
                 About
               </Link>
             </li>
-            {this.renderContent()}
+            {this.renderSignIn()}
           </ul>
         </div>
       </nav>
