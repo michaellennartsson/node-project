@@ -12,6 +12,7 @@ import Snake from './Snake';
 class App extends Component {
   componentDidMount() {
     this.props.fetchUser();
+    this.props.fetchExchangeRate();
   }
 
   render() {

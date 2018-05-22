@@ -8,7 +8,6 @@ class Header extends Component {
   }
 
   closePopOver() {
-    console.log('Did Mount');
     const pop = this.refs.popOver;
     pop.classList.remove('open');
   }

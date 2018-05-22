@@ -1,12 +1,23 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
-const CurrencyConverter = () => {
-  return (
-    <div style={{ textAlign: 'center' }}>
-      <h1>Currency Converter</h1>
-      Currencies from http://www.fixer.io
-    </div>
-  );
-};
+class CurrencyConverter extends Component {
+  componentDidMount() {
+    console.log(this.props.exchangeRate);
+  }
 
-export default CurrencyConverter;
+  render() {
+    return (
+      <div style={{ textAlign: 'center' }}>
+        <h4>Currency Converter</h4>
+        Currencies from http://www.fixer.io
+      </div>
+    );
+  }
+}
+
+function mapStateToProps(state) {
+  return { exchangeRate: state.exchangeRate };
+}
+
+export default connect(mapStateToProps)(CurrencyConverter);

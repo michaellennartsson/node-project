@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { FETCH_USER } from './types';
+import { FETCH_USER, FETCH_EXCHANGE_RATE } from './types';
 
 // dispatch is a function that comes from redux-thunk
 export const fetchUser = () => async dispatch => {
@@ -17,3 +17,8 @@ export const fetchUser = () => {
   };
 };
 */
+
+export const fetchExchangeRate = () => async dispatch => {
+  const res = await axios.get('/api/fetch_exchange_rates');
+  dispatch({ type: FETCH_EXCHANGE_RATE, payload: res.data });
+};
