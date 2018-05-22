@@ -11,7 +11,24 @@ module.exports = app => {
         }
       })
       .then(response => {
+        response.data.rates = convertToSEK(response.data);
         res.send(response.data);
       });
   });
+};
+
+const convertToSEK = data => {
+  const ratesEUR = data.rates;
+  const EUR = data.rates['SEK'];
+  let ratesSEK = {};
+
+  for (const rate in ratesEUR) {
+    if (rate === 'SEK') {
+      ratesSEK['EUR'] = EUR;
+    } else {
+      ratesSEK[rate] = EUR / ratesEUR[rate];
+    }
+  }
+
+  return ratesSEK;
 };
