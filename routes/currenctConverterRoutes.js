@@ -20,15 +20,21 @@ module.exports = app => {
 const convertToSEK = data => {
   const ratesEUR = data.rates;
   const EUR = data.rates['SEK'];
+  const DECIMALS = 2;
   let ratesSEK = {};
 
   for (const rate in ratesEUR) {
     if (rate === 'SEK') {
-      ratesSEK['EUR'] = EUR;
+      ratesSEK['EUR'] = precisionRound(EUR, DECIMALS);
     } else {
-      ratesSEK[rate] = EUR / ratesEUR[rate];
+      ratesSEK[rate] = precisionRound(EUR / ratesEUR[rate], DECIMALS);
     }
   }
 
   return ratesSEK;
+};
+
+const precisionRound = (number, precision) => {
+  var factor = Math.pow(10, precision);
+  return Math.round(number * factor) / factor;
 };

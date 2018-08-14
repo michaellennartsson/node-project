@@ -27,7 +27,7 @@ class CurrencyConverter extends Component {
     return (
       <div style={{ textAlign: 'center' }}>
         <h4>Currency Converter</h4>
-        Currencies from http://www.fixer.io
+        <p>Currencies from http://www.fixer.io</p>
         <div className="row">
           <div className="three columns" style={{ height: '10px' }} />
           <div className="six columns">
