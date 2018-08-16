@@ -1,6 +1,7 @@
 import './css/normalize.css';
 import './css/skeleton.css';
 import './css/custom.css';
+import './css/custom1.css';
 import React from 'react';
 import ReactDom from 'react-dom';
 import { Provider } from 'react-redux';

@@ -7,7 +7,7 @@ import About from './About';
 import CurrencyConverter from './CurrencyConverter';
 import Home from './Home';
 import Header from './Header';
-import Snake from './Snake';
+import Snake from './Snake/Snake';
 
 class App extends Component {
   componentDidMount() {
@@ -32,4 +32,7 @@ class App extends Component {
   }
 }
 
-export default connect(null, actions)(App);
+export default connect(
+  null,
+  actions
+)(App);

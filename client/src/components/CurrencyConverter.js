@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 class CurrencyConverter extends Component {
-  componentDidMount() {
-    console.log(this.props.exchangeRate);
-  }
+  componentDidMount() {}
 
   renderTableContent() {
     if (this.props.exchangeRate === null) return;
