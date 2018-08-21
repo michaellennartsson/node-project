@@ -11,8 +11,8 @@ class Snake extends Component {
     this.state = {
       gameOver: false,
       key: 0,
-      timer: 0,
       gameSpeed: 500,
+      eatenApples: 0,
       apple: {
         x: 100,
         y: 200
@@ -51,9 +51,6 @@ class Snake extends Component {
 
     if (this.state.gameOver) return;
 
-    const timer = this.state.timer + 1;
-    this.setState({ timer });
-
     this.updateCanvas();
   }
 
@@ -63,6 +60,7 @@ class Snake extends Component {
     snake.unshift(head);
     if (this.eatApple()) {
       this.newApple();
+      this.setState({ eatenApples: this.state.eatenApples + 1 });
     } else {
       snake.pop();
     }
@@ -105,22 +103,17 @@ class Snake extends Component {
 
   checkMove() {
     const snake = this.state.snake.slice();
+    const nextXPos = this.state.head.x;
+    const nextYPos = this.state.head.y;
     snake.splice(0, 1);
-
-    let nextXPos = this.state.head.x;
-    let nextYPos = this.state.head.y;
     if (
       nextXPos < 0 ||
       nextYPos < 0 ||
       nextXPos >= WIDTH ||
-      nextYPos >= HEIGHT
+      nextYPos >= HEIGHT ||
+      this.inSnake(snake, this.state.head)
     ) {
-      this.setState({ gameOver: true });
-      this.setState({ key: 0 });
-    }
-    if (this.inSnake(snake, this.state.head)) {
-      this.setState({ gameOver: true });
-      this.setState({ key: 0 });
+      this.setState({ gameOver: true, key: 0 });
     }
   }
 
@@ -158,19 +151,15 @@ class Snake extends Component {
         head.y = head.y + 20;
         break;
       case 82:
-        this.setState({ key: 0 });
-        this.setState({ gameOver: false });
         head.x = 20;
         head.y = 20;
         this.setState({
-          snake: [
-            {
-              x: 20,
-              y: 20
-            }
-          ]
+          apple: { x: 100, y: 200 },
+          eatenApples: 0,
+          snake: [{ x: 20, y: 20 }],
+          key: 0,
+          gameOver: false
         });
-        this.setState({ apple: { x: 100, y: 200 } });
         this.updateCanvas();
         break;
       default:
@@ -191,11 +180,18 @@ class Snake extends Component {
     }
   }
 
+  informationMessage() {
+    return this.state.gameOver
+      ? 'Game Over - restart by press "r" key'
+      : 'Play by using arrow keys';
+  }
+
   render() {
     return (
       <div style={{ textAlign: 'center' }}>
-        <h1>Snake {this.state.key}</h1>
-        <p>{this.state.timer}</p>
+        <h1>Snake</h1>
+        <h5>{this.informationMessage()}</h5>
+        <p>Number of apples eaten: {this.state.eatenApples}</p>
         <canvas
           className="canvas"
           ref={this.canvas}
