@@ -189,7 +189,7 @@ class Snake extends Component {
   render() {
     return (
       <div style={{ textAlign: 'center' }}>
-        <h1>Snake</h1>
+        <h4>Snake</h4>
         <h5>{this.informationMessage()}</h5>
         <p>Number of apples eaten: {this.state.eatenApples}</p>
         <canvas
