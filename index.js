@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cookieSession = require('cookie-session');
 const passport = require('passport');
+const bodyParser = require('body-parser');
 
 const keys = require('./config/keys');
 require('./models/User');
@@ -17,12 +18,13 @@ app.use(
     keys: [keys.cookieKey]
   })
 );
-
+app.use(bodyParser.json({ type: 'application/json' }));
 app.use(passport.initialize());
 app.use(passport.session());
 
 require('./routes/authRoutes')(app);
 require('./routes/currenctConverterRoutes')(app);
+require('./routes/highScores')(app);
 
 if (process.env.NODE_ENV === 'production') {
   // Serve production assets like .js or .css

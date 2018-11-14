@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
 // gameboard dimensions in px
 const WIDTH = 200;
@@ -33,10 +34,18 @@ class Snake extends Component {
   }
 
   componentDidMount() {
+    axios
+      .get('/api/highscore/snake')
+      .then(res => this.setHighScore(res.data.snakeHighScore));
     document.addEventListener('keydown', this.handleKey);
     this.timerID = setInterval(() => this.tick(), this.state.gameSpeed);
     this.ctx = this.canvas.current.getContext('2d');
     this.updateCanvas();
+  }
+
+  setHighScore(data) {
+    if (data === undefined) this.setState({ highScore: 0 });
+    else this.setState({ highScore: data });
   }
 
   componentWillUnmount() {
@@ -160,11 +169,23 @@ class Snake extends Component {
           key: 0,
           gameOver: false
         });
+        this.putHighScore();
         this.updateCanvas();
         break;
       default:
     }
     this.setState({ head });
+  }
+
+  putHighScore() {
+    axios({
+      method: 'put',
+      url: '/api/highscore/snake_new',
+      data: {
+        firstName: 'Fred',
+        lastName: 'Flintstone'
+      }
+    });
   }
 
   handleKey(e) {
@@ -191,6 +212,7 @@ class Snake extends Component {
       <div style={{ textAlign: 'center' }}>
         <h4>Snake</h4>
         <h5>{this.informationMessage()}</h5>
+        <p>High Score: {this.state.highScore}</p>
         <p>Number of apples eaten: {this.state.eatenApples}</p>
         <canvas
           className="canvas"
