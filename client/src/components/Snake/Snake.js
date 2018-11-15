@@ -34,18 +34,13 @@ class Snake extends Component {
   }
 
   componentDidMount() {
-    axios
-      .get('/api/highscore/snake')
-      .then(res => this.setHighScore(res.data.snakeHighScore));
+    axios.get('/api/highscore/snake').then(res => {
+      this.setHighScore(res.data.snakeHighScore);
+    });
     document.addEventListener('keydown', this.handleKey);
     this.timerID = setInterval(() => this.tick(), this.state.gameSpeed);
     this.ctx = this.canvas.current.getContext('2d');
     this.updateCanvas();
-  }
-
-  setHighScore(data) {
-    if (data === undefined) this.setState({ highScore: 0 });
-    else this.setState({ highScore: data });
   }
 
   componentWillUnmount() {
@@ -61,6 +56,14 @@ class Snake extends Component {
     if (this.state.gameOver) return;
 
     this.updateCanvas();
+  }
+
+  setHighScore(data) {
+    if (data === undefined) {
+      this.setState({ highScore: 0, loggedIn: false });
+    } else {
+      this.setState({ highScore: data, loggedIn: true });
+    }
   }
 
   updateSnake() {
@@ -122,7 +125,26 @@ class Snake extends Component {
       nextYPos >= HEIGHT ||
       this.inSnake(snake, this.state.head)
     ) {
-      this.setState({ gameOver: true, key: 0 });
+      this.gameOver();
+    }
+  }
+
+  gameOver() {
+    const newHighScore =
+      this.state.eatenApples > this.state.highScore
+        ? this.state.eatenApples
+        : this.state.highScore;
+
+    this.setState({ gameOver: true, key: 0, highScore: newHighScore });
+
+    if (this.state.loggedIn) {
+      axios({
+        method: 'put',
+        url: '/api/highscore/snake',
+        data: {
+          snakeHighScore: newHighScore
+        }
+      });
     }
   }
 
@@ -169,7 +191,7 @@ class Snake extends Component {
           key: 0,
           gameOver: false
         });
-        this.putHighScore();
+        this.updateHighScores();
         this.updateCanvas();
         break;
       default:
@@ -177,16 +199,7 @@ class Snake extends Component {
     this.setState({ head });
   }
 
-  putHighScore() {
-    axios({
-      method: 'put',
-      url: '/api/highscore/snake_new',
-      data: {
-        firstName: 'Fred',
-        lastName: 'Flintstone'
-      }
-    });
-  }
+  updateHighScores() {}
 
   handleKey(e) {
     const key = e.keyCode;

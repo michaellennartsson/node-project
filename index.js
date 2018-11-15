@@ -24,7 +24,12 @@ app.use(passport.session());
 
 require('./routes/authRoutes')(app);
 require('./routes/currenctConverterRoutes')(app);
-require('./routes/highScores')(app);
+require('./routes/snake_routes')(app);
+
+// Error handling middleware if routes throws an error
+app.use((err, req, res, next) => {
+  res.status(422).send({ error: err.message });
+});
 
 if (process.env.NODE_ENV === 'production') {
   // Serve production assets like .js or .css
