@@ -46,6 +46,11 @@ class Header extends Component {
               </Link>
             </li>
             <li className="popover-item">
+              <Link to="/bouncing-balls" className="popover-link">
+                Bouncing Balls
+              </Link>
+            </li>
+            <li className="popover-item">
               <Link to="" className="popover-link" href="#typography">
                 Tabs
               </Link>
