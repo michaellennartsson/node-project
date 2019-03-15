@@ -34,7 +34,7 @@ class Snake extends Component {
   }
 
   componentDidMount() {
-    axios.get('/api/highscore/snake').then(res => {
+    axios.get('/api/current_user').then(res => {
       this.setHighScore(res.data.snakeHighScore);
     });
     document.addEventListener('keydown', this.handleKey);
