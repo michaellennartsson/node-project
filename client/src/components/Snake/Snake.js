@@ -140,7 +140,7 @@ class Snake extends Component {
     if (this.state.loggedIn) {
       axios({
         method: 'put',
-        url: '/api/highscore/snake',
+        url: '/api/snake',
         data: {
           snakeHighScore: newHighScore
         }
