@@ -1,6 +1,12 @@
+/*global _generateRandom */
+
 import React, { Component } from 'react';
 
 class BouncingBalls extends Component {
+  componentDidMount() {
+    const rand = _generateRandom;
+    console.log(rand());
+  }
   render() {
     return (
       <div style={{ textAlign: 'center' }}>
