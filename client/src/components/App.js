@@ -9,6 +9,7 @@ import Home from './Home';
 import Header from './Header';
 import Snake from './Snake/Snake';
 import BouncingBalls from './BouncingBalls';
+import BallBalancingRobot from './BallBalancingRobot';
 
 class App extends Component {
   componentDidMount() {
@@ -27,6 +28,10 @@ class App extends Component {
             <Route path="/currency-converter" component={CurrencyConverter} />
             <Route path="/snake" component={Snake} />
             <Route path="/bouncing-balls" component={BouncingBalls} />
+            <Route
+              path="/ball-balancing-robot"
+              component={BallBalancingRobot}
+            />
           </div>
         </BrowserRouter>
       </div>
