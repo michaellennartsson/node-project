@@ -1,38 +1,43 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 
-class Header extends Component {
-  componentDidMount() {
-    this.closePopOver();
-  }
+import SignIn from './SignIn';
 
-  closePopOver() {
-    const pop = this.refs.popOver;
-    pop.classList.remove('open');
-  }
+const Header = () => {
+  const projectsRef = useRef();
 
-  togglePopOver() {
-    const pop = this.refs.popOver;
-    pop.classList.toggle('open');
-  }
+  useEffect(() => {
+    closePopOver();
+  }, []);
 
-  renderDropDown() {
+  const closePopOver = () => {
+    projectsRef.current.className = 'popover';
+  };
+
+  const togglePopOver = () => {
+    projectsRef.current.className = projectsRef.current.className.includes(
+      'open'
+    )
+      ? 'popover'
+      : 'popover open';
+  };
+
+  const renderDropDown = () => {
     return (
       <li className="navbar-item-left">
         <Link
           to="#"
           className="navbar-link margin-right"
           data-popover="#codeNavPopover"
-          onClick={this.togglePopOver.bind(this)}
+          onClick={togglePopOver}
         >
           Projects
         </Link>
         <div
-          ref="popOver"
+          ref={projectsRef}
           id="codeNavPopover"
           className="popover open"
-          onClick={this.togglePopOver.bind(this)}
+          onClick={togglePopOver}
         >
           <ul className="popover-list">
             <li className="popover-item">
@@ -59,58 +64,28 @@ class Header extends Component {
         </div>
       </li>
     );
-  }
+  };
 
-  renderSignIn() {
-    //console.log(this.props.auth);
-    switch (this.props.auth) {
-      case null:
-        return;
-      case false:
-        return (
-          <li className="navbar-item-right">
-            <a className="navbar-link margin-left" href="/auth/google">
-              Sign In
-            </a>
+  return (
+    <nav className="navbar">
+      <div className="container">
+        <ul className="navbar-list">
+          <li className="navbar-item-left">
+            <Link to="/" className="navbar-link margin-right">
+              Home
+            </Link>
           </li>
-        );
-      default:
-        return (
-          <li className="navbar-item-right">
-            <a className="navbar-link margin-left" href="/api/logout">
-              Sign Out
-            </a>
+          {renderDropDown()}
+          <li className="navbar-item-left">
+            <Link to="/about" className="navbar-link margin-right">
+              About
+            </Link>
           </li>
-        );
-    }
-  }
+          <SignIn />
+        </ul>
+      </div>
+    </nav>
+  );
+};
 
-  render() {
-    return (
-      <nav className="navbar">
-        <div className="container">
-          <ul className="navbar-list">
-            <li className="navbar-item-left">
-              <Link to="/" className="navbar-link margin-right">
-                Home
-              </Link>
-            </li>
-            {this.renderDropDown()}
-            <li className="navbar-item-left">
-              <Link to="/about" className="navbar-link margin-right">
-                About
-              </Link>
-            </li>
-            {this.renderSignIn()}
-          </ul>
-        </div>
-      </nav>
-    );
-  }
-}
-
-function mapStateToProps(state) {
-  return { auth: state.auth };
-}
-
-export default connect(mapStateToProps)(Header);
+export default Header;
