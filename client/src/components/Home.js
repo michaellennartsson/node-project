@@ -3,8 +3,7 @@ import React from 'react';
 const Home = () => {
   return (
     <div style={{ textAlign: 'center' }}>
-      <h1>Welcome!</h1>
-      More content will be added soon.
+      <img id="pacific" src="./61iYkDDDcsL._SL1200_.jpg" alt="Pacific-Breeze" />
     </div>
   );
 };
