@@ -1,10 +1,16 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 
 import SignIn from './SignIn';
+import useOutsideClick from './hooks/useOutsideClick';
 
 const Header = () => {
   const projectsRef = useRef();
+  const linkRef = useRef();
+
+  useOutsideClick(linkRef, () => {
+    closePopOver();
+  });
 
   useEffect(() => {
     closePopOver();
@@ -26,6 +32,7 @@ const Header = () => {
     return (
       <li className="navbar-item-left">
         <Link
+          ref={linkRef}
           to="#"
           className="navbar-link margin-right"
           data-popover="#codeNavPopover"
